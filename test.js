@@ -1,3 +1,35 @@
+process.stdin.resume();
+process.stdin.setEncoding('utf8');
+
+// declare global variables
+var input_stdin = "";
+var chunks = "";
+
+// standard input is stored into input_stdin
+process.stdin.on('data', function (data) {
+    input_stdin += data;
+});
+
+// standard input is done and stored into an array
+process.stdin.on('end', function () {
+    input = input_stdin.split("\n");
+    var n = parseInt(input[0]);
+    const points = [];
+    for(var i=0; i<n; i++) {
+        var line = input[i+1];
+        var arr = line.split(' ');
+        points.push({x : parseInt(arr[0]), y : parseInt(arr[1])});
+    }
+
+    const hull = kirkpatrickSeidel(points);
+    var perimeter = 0;
+    for(let i=0; i<hull.length; i++){
+        const j = (i+1)%hull.length;
+        perimeter += Math.sqrt(Math.pow(hull[i].x - hull[j].x, 2) + Math.pow(hull[i].y - hull[j].y, 2));
+    }
+    console.log(Math.round(perimeter*10)/10);
+});
+
 function checkEqual(a, b, tolerance = 1e-6) {
     return Math.abs(a - b) <= tolerance;
   }
