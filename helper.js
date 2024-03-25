@@ -62,11 +62,11 @@ function animateLine(p, q) {
             current_2[i].x -= xStep[i];
             current_2[i].y -= yStep[i];
 
-            if (Math.abs(current_1[i].x - q[i].x) < Math.abs(xStep[i]) && Math.abs(current_1[i].y - q[i].y) < Math.abs(yStep[i])) {
+            if (Math.abs(current_1[i].x - q[i].x) < Math.abs(xStep[i]) || Math.abs(current_1[i].y - q[i].y) < Math.abs(yStep[i])) {
                 current_1[i].x = q[i].x;
                 current_1[i].y = q[i].y;
             }
-            if (Math.abs(current_2[i].x - p[i].x) < Math.abs(xStep[i]) && Math.abs(current_2[i].y - p[i].y) < Math.abs(yStep[i])) {
+            if (Math.abs(current_2[i].x - p[i].x) < Math.abs(xStep[i]) || Math.abs(current_2[i].y - p[i].y) < Math.abs(yStep[i])) {
                 current_2[i].x = p[i].x;
                 current_2[i].y = p[i].y;
             }

@@ -36,11 +36,15 @@ jarvisMarchBtn.addEventListener('click', async () => {
 
 // Kirkpatrick-Seidel Convex Hull algorithm
 const kirkpatrickSeidelBtn = document.getElementById('kirkpatrickSeidelBtn');
-kirkpatrickSeidelBtn.addEventListener('click', () => {
+kirkpatrickSeidelBtn.addEventListener('click', async () => {
     lines.length = 0;
     drawPrevious();
-    const steps = kirkpatrickSeidel(points);
-    animateLine();
+    const hull = kirkpatrickSeidel(points);
+    console.log(hull)
+    for(let i=0;i<hull.length;i++){
+        await new Promise(done => setTimeout(() => done(), 1000));  
+        animateLine([hull[i]], [hull[(i+1)%hull.length]]);
+    }
 });
 
 drawRandomPoints();
