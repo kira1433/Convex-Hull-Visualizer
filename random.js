@@ -12,24 +12,12 @@ function generateRandomPoints() {
     const variance = 10000;
 
     let points = [];
-    // for (let i = 0; i < numPoints; i++) {
-    //     points.push({
-    //         x: Math.max(0, Math.min(generateNormalPoint(mean, variance), 600)),
-    //         y: Math.max(0, Math.min(generateNormalPoint(mean, variance), 600))
-    //     });
-    // }
-
-    // points = [
-    //     {x: 200, y: 400},
-    //     {x: 300, y: 400},
-    //     {x: 300, y: 300},
-    //     {x: 400, y: 300},
-    //     {x: 400, y: 400},
-    //     {x: 500, y: 400},
-    //     {x: 500, y: 200},
-    //     {x: 350, y: 200},
-    //     {x: 200, y: 200},
-    // ]
-    // return points;
+    for (let i = 0; i < numPoints; i++) {
+        points.push({
+            x: Math.max(0, Math.min(generateNormalPoint(mean, variance), 600)),
+            y: Math.max(0, Math.min(generateNormalPoint(mean, variance), 600))
+        });
+    }
+    return points;
 }
 

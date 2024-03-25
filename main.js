@@ -40,7 +40,6 @@ kirkpatrickSeidelBtn.addEventListener('click', async () => {
     lines.length = 0;
     drawPrevious();
     const hull = kirkpatrickSeidel(points);
-    console.log(hull)
     for(let i=0;i<hull.length;i++){
         await new Promise(done => setTimeout(() => done(), 1000));  
         animateLine([hull[i]], [hull[(i+1)%hull.length]]);

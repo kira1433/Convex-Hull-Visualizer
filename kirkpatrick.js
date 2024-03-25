@@ -41,24 +41,20 @@ function median_of_medians(list, i){
     });
     const pivot = median_of_medians(medians,(medians.length / 2)| 0);
 
-    let eq = 0;
     const low = [], high = [];
     for (let j = 0; j < list.length; j++) {
         if (list[j] < pivot) low.push(list[j]);
-        else if(list[j]==pivot){
-            eq++;
-        }
         else high.push(list[j]);
     }
     if (i < low.length) return median_of_medians(low, i);
-    else if (i > low.length + eq) return median_of_medians(high, i - low.length - 1);
+    else if (i > low.length) return median_of_medians(high, i - low.length - 1);
     else return pivot;
 }
 
 function upper_hull(p_min,p_max,T_){
     if(T_.length == 0) return [p_min,p_max];
     const T = [p_min,p_max,...T_];
-    a = median_of_medians(T.map(p => p.x) , (T.length / 2) | 0);
+    var a = median_of_medians(T.map(p => p.x) , (T.length / 2) | 0);
     let p = upper_bridge(T , a);
     let p_l = p[0], p_r = p[1];
     const T_l = [], T_r = [];
@@ -92,10 +88,12 @@ function upper_bridge(S , a){
         } 
         else slopes.push((pair[0].y - pair[1].y) / (pair[0].x - pair[1].x));
     }
+    if(slopes.length == 0)return upper_bridge(candidates,a);
+
     const K = median_of_medians(slopes, (slopes.length / 2) | 0);
     const SMALL=[],EQUAL=[],LARGE=[];
     for(let pair of pairs){
-        if(pair[0].x != pair[1].x){
+        if(!checkEqual(pair[0].x, pair[1].x)){
             const slope = (pair[0].y - pair[1].y) / (pair[0].x - pair[1].x);
             if(slope < K) SMALL.push(pair);
             else if(checkEqual(slope, K)) EQUAL.push(pair);
