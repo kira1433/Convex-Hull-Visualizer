@@ -6,8 +6,7 @@ function generateNormalPoint(mean, variance) {
     return Math.round(mean + z * Math.sqrt(variance));
 }
 
-function generateRandomPoints() {
-    const numPoints = 10;
+function generateRandomPoints(numPoints = 10) {
     const mean = 300;
     const variance = 10000;
 

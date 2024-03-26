@@ -1,62 +1,102 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <title>Interactive Plot</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f8f8f8;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Plot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    body {
+    font-family: 'Poppins', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    background-size: 200% 200%;
+    animation: gradientAnimation 4s ease infinite;
+    }
 
-        canvas {
-            border: 1px solid #ccc;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
+    @keyframes gradientAnimation {
+    0% {
+        background-position: 0% 0%;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: 0% 0%;
+    }
+    }
 
-        .buttons {
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-        }
+    .container {
+    /* max-width: 800px; */
+    /* padding: 15px; */
+    background-color: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    /* text-align: center; */
+    /* position: relative; */
+    z-index: 1;
+    }
 
-        button {
-            margin: 0 10px;
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
+    canvas {
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    max-width: 100%;
+    height: auto;
+    }
 
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    .buttons {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    }
+
+    button {
+    margin: 10px;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    background-color: #fda085;
+    color: white;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    button:hover {
+    background-color: #f6d365;
+    color: #333;
+    transform: translateY(-2px);
+    }
+
+    button i {
+    margin-right: 8px;
+    }
+  </style>
 </head>
 <body>
-    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <canvas id="myCanvas" class="container" width="600" height="600"></canvas>
     <div class="buttons">
-        <button id="clearBtn">Clear</button>
-        <button id="randBtn"><i class="fa">&#xf074;</i></button>
-        <button id="jarvisMarchBtn">Jarvis March</button>
-        <button id="kirkpatrickSeidelBtn">Kirkpatrick-Seidel</button>
+      <button id="clearBtn"><i class="fas fa-eraser"></i> Clear</button>
+      <button id="randBtn"><i class="fas fa-random"></i> Random</button>
+      <button id="jarvisMarchBtn"><i class="fas fa-walking"></i> Jarvis March</button>
+      <button id="kirkpatrickSeidelBtn"><i class="fas fa-project-diagram"></i> Kirkpatrick-Seidel</button>
     </div>
-    
-    <script src="jarvis.js"></script>
-    <script src="kirkpatrick.js"></script>
-    <script src="random.js"></script>
-    <script src="helper.js"></script>
-    <script src="main.js"></script>
+
+  <script src="jarvis.js"></script>
+  <script src="kirkpatrick.js"></script>
+  <script src="random.js"></script>
+  <script src="helper.js"></script>
+  <script src="main.js"></script>
 </body>
 </html>

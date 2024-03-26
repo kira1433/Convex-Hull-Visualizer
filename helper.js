@@ -4,10 +4,10 @@ const points = [], lines = [], temp_lines = [];
 
 function drawCurrent() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = 'black';
     points.forEach(point => {
         ctx.beginPath();
         ctx.arc(point.x, point.y, 3, 0, 2 * Math.PI);
+        ctx.fillStyle = point.color;
         ctx.fill();
     });
     temp_lines.forEach(line => {
@@ -44,18 +44,18 @@ function drawTempLine(p,q,dt=100,color='red') {
     temp_lines.push({st: p, cur:p , ed: q, color: color, dt : dt});
 }
 
-function drawTempineFromMid(p,q,dt=100,color='red'){
+function drawTempLineFromMid(p,q,dt=100,color='red'){
     mid = {x : (p.x + q.x) / 2 , y : (p.y + q.y) / 2};
     drawTempLine(mid,p,dt,color);
     drawTempLine(mid,q,dt,color);
 }
 
 
-function drawRandomPoints() {
+function drawRandomPoints(numPoints = 10) {
     points.length = 0; // Clear the points array
     lines.length = 0;
-    generateRandomPoints().forEach(point => {
-        points.push(point)
+    generateRandomPoints(numPoints).forEach(point => {
+        points.push({ x: point.x, y: point.y, color: 'black'})
     });
     drawCurrent();
 }
