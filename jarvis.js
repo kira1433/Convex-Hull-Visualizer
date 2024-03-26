@@ -1,5 +1,6 @@
 // Jarvis March Convex Hull algorithm
 async function jarvisMarch(points , cnt) {
+    await wait((200));
     if (points.length == 2){
         if(cnt == jarvis_cnt) drawLine(points[0],points[1],200,'red');
     }
@@ -30,7 +31,7 @@ async function jarvisMarch(points , cnt) {
             points[q].color = 'red';
             drawTempLine(points[p],points[q],100,'green');
         }
-        await new Promise(done => setTimeout(() => done(), 200));
+        await wait((200));
 
         for (let i = 0; i < points.length; i++) {
             // If i is more counterclockwise than current q, then update q
@@ -43,21 +44,21 @@ async function jarvisMarch(points , cnt) {
                         points[i].color = 'red';
                         drawTempLine(points[p],points[i],100,'green');
                     }
-                    await new Promise(done => setTimeout(() => done(), 200));
+                    await wait((200));
                 }
             }
             else if(i!=q){
                 if(hull.length<2 || points[i]!=hull[hull.length-2]){
                     if(cnt == counter) drawTempLine(points[p],points[i],100,'blue');
-                    await new Promise(done => setTimeout(() => done(), 200));
+                    await wait((200));
                 }
             }
         }
 
-        await new Promise(done => setTimeout(() => done(), 1000));
+        await wait((1000));
         if(cnt == counter) drawLine(points[p],points[q],200,'red');
         if(cnt == counter) temp_lines.length = 0;
-        await new Promise(done => setTimeout(() => done(), 1200));
+        await wait((1200));
         if(cnt == counter){
             for(let p of points)p.color = 'black';
         }

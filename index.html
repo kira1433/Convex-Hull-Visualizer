@@ -10,88 +10,197 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
     body {
-    font-family: 'Poppins', sans-serif;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    background: linear-gradient(135deg, #f6d365, #fda085);
-    background-size: 200% 200%;
-    animation: gradientAnimation 4s ease infinite;
+      font-family: 'Poppins', sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #f6d365, #fda085);
+      background-size: 200% 200%;
+      animation: gradientAnimation 4s ease infinite;
     }
 
     @keyframes gradientAnimation {
-    0% {
+      0% {
         background-position: 0% 0%;
-    }
-    50% {
+      }
+      50% {
         background-position: 100% 100%;
-    }
-    100% {
+      }
+      100% {
         background-position: 0% 0%;
-    }
+      }
     }
 
     .container {
-    /* max-width: 800px; */
-    /* padding: 15px; */
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    /* text-align: center; */
-    /* position: relative; */
-    z-index: 1;
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+      padding: 20px;
+      border-radius: 10px;
     }
 
     canvas {
-    border-radius: 8px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
-    max-width: 100%;
-    height: auto;
+      border-radius: 8px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-width: 100%;
+      height: auto;
+    }
+
+    .controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-left: 20px;
     }
 
     .buttons {
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
     }
 
     button {
-    margin: 10px;
-    padding: 12px 24px;
-    font-size: 16px;
-    font-weight: 600;
-    background-color: #fda085;
-    color: white;
-    border: none;
-    border-radius: 30px;
-    cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      margin: 5px;
+      padding: 8px 16px;
+      font-size: 14px;
+      font-weight: 600;
+      background-color: #fda085;
+      color: white;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     }
 
     button:hover {
-    background-color: #f6d365;
-    color: #333;
-    transform: translateY(-2px);
+      background-color: #f6d365;
+      color: #333;
+      transform: translateY(-2px);
     }
 
     button i {
-    margin-right: 8px;
+      margin-right: 8px;
+    }
+
+    textarea {        
+      width: 260px;
+      height: 110px;
+      padding: 20px;
+      margin-bottom: 20px;
+      font-family: 'Poppins', sans-serif;
+      font-size: 14px;
+      border: none;
+      /* border-radius: 8px; */
+      /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); */
+      resize: none;
+      /* margin-bottom: 10px; */
+      background-color: transparent;    
+      /* background-color: #fef9f1; */
+      color: #333;
+      /* opacity: 0.8; */
+      /* read-only: true; */
+    }
+
+    .switch-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .switch-label {
+      font-size: 14px;
+      font-weight: 600;
+      margin-right: 10px;
+      color: #333;
+    }
+
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #fda085;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
     }
   </style>
 </head>
 <body>
-    <canvas id="myCanvas" class="container" width="600" height="600"></canvas>
-    <div class="buttons">
-      <button id="clearBtn"><i class="fas fa-eraser"></i> Clear</button>
-      <button id="randBtn"><i class="fas fa-random"></i> Random</button>
-      <button id="jarvisMarchBtn"><i class="fas fa-walking"></i> Jarvis March</button>
-      <button id="kirkpatrickSeidelBtn"><i class="fas fa-project-diagram"></i> Kirkpatrick-Seidel</button>
+  <div class="container">
+    <canvas id="myCanvas" width="600" height="600"></canvas>
+    <div class="controls">
+      <textarea placeholder="Information will be displayed here..." disabled></textarea>
+      <div class="buttons">
+        <button id="clearBtn"><i class="fas fa-eraser"></i> Clear</button>
+        <button id="randBtn"><i class="fas fa-random"></i> Random</button>
+        <button id="jarvisMarchBtn"><i class="fas fa-walking"></i> Jarvis March</button>
+        <button id="kirkpatrickSeidelBtn"><i class="fas fa-project-diagram"></i> Kirkpatrick-Seidel</button>
+        <div class="switch-container">
+            <button id="nextBtn"><i class="fas fa-arrow-right"></i> Next</button>
+            <label class="switch">
+              <input id="switchInput" type="checkbox">
+              <span class="slider round"></span>
+            </label>
+        </div>
+        
+      </div>
+      
     </div>
+  </div>
 
   <script src="jarvis.js"></script>
   <script src="kirkpatrick.js"></script>

@@ -24,7 +24,7 @@ async function kirkpatrickSeidel(points, cnt) {
 
     if(cnt==counter) drawLineFromMid(p_lmin,p_umin,200,'red');
     if(cnt==counter) drawLineFromMid(p_lmax,p_umax,200,'red');
-    await new Promise(done => setTimeout(() => done(), 1200));
+    await wait((1200));
 }
 
 function median_of_medians(list, i){
@@ -59,7 +59,7 @@ async function upper_hull(p_min,p_max,T_,xsign,ysign,cnt){
     else var a = median_of_medians(T.map(p => p.x) , (T.length / 2) | 0);
 
     if(cnt == counter) drawTempLineFromMid({x:a,y:0},{x:a,y:600},40,'blue');
-    await new Promise(done => setTimeout(() => done(), 500));
+    await wait((500));
 
     let p = await upper_bridge(T , a,ysign,cnt);
     let p_l = p[0], p_r = p[1];
@@ -72,7 +72,7 @@ async function upper_hull(p_min,p_max,T_,xsign,ysign,cnt){
 
     if(cnt!=counter) p_min.color = 'black';
     if(cnt!=counter) p_max.color = 'black';
-    await new Promise(done => setTimeout(() => done(), 1200));
+    await wait((1200));
     if(cnt==counter) p_min.color = 'black';
     if(cnt==counter) p_max.color = 'black';
 
@@ -117,7 +117,7 @@ async function upper_bridge(S , a , sign,cnt){
     for(let p of pairs){
         if(cnt == counter) drawTempLine(p[0],p[1],50,'black');
     }
-    await new Promise(done => setTimeout(() => done(), 2000));
+    await wait((2000));
 
     // if(S.length == 2) return pairs[0];
     if(S.length % 2){
@@ -164,7 +164,7 @@ async function upper_bridge(S , a , sign,cnt){
     for(let p of SMALL){
         if(cnt == counter) drawTempLine(p[0],p[1],1,'orange');
     }
-    await new Promise(done => setTimeout(() => done(), 2000));
+    await wait((2000));
     
     for(let p of S){
         let c = p.y - sign*K*p.x;
@@ -172,7 +172,7 @@ async function upper_bridge(S , a , sign,cnt){
         let y1 = sign*K*1000 + c
         if(cnt == counter) drawTempLineFromMid({x:-1000,y:y0},{x:1000,y:y1},1,'violet');
     }
-    await new Promise(done => setTimeout(() => done(), 2000));
+    await wait((2000));
 
 
     let mx = -Infinity;
@@ -204,7 +204,7 @@ async function upper_bridge(S , a , sign,cnt){
     let y0 = -sign*K*1000 + (-sign*K*p_k.x + p_k.y)
     let y1 = sign*K*1000 + (-sign*K*p_k.x + p_k.y)
     if(cnt == counter) drawTempLineFromMid({x:-1000,y:y0},{x:1000,y:y1},1,'violet');
-    await new Promise(done => setTimeout(() => done(), 2000));
+    await wait((2000));
     
     for(let p of MAX){
         if(p.x < p_k.x ) p_k = p;
@@ -216,19 +216,19 @@ async function upper_bridge(S , a , sign,cnt){
             if(cnt==counter && pair[1].color!='red') pair[1].color = 'green';
             candidates.push(pair[1]);
         }
-        await new Promise(done => setTimeout(() => done(), 2000));
+        await wait((2000));
         for(let pair of EQUAL){
             if(cnt==counter && pair[1].color!='red') pair[1].color = 'green';
             candidates.push(pair[1]);
         }
-        await new Promise(done => setTimeout(() => done(), 2000));
+        await wait((2000));
         for(let pair of SMALL){
             if(cnt==counter && pair[0].color!='red') pair[0].color = 'green';
             if(cnt==counter && pair[1].color!='red') pair[1].color = 'green';
             candidates.push(pair[0]);
             candidates.push(pair[1]);
         }
-        await new Promise(done => setTimeout(() => done(), 2000));
+        await wait((2000));
     }
 
     if(p_k.x > a){
@@ -236,23 +236,23 @@ async function upper_bridge(S , a , sign,cnt){
             if(cnt==counter && pair[0].color!='red') pair[0].color = 'green';
             candidates.push(pair[0]);
         }
-        await new Promise(done => setTimeout(() => done(), 2000));
+        await wait((2000));
         for(let pair of EQUAL){
             if(cnt==counter && pair[0].color!='red') pair[0].color = 'green';
             candidates.push(pair[0]);
         }
-        await new Promise(done => setTimeout(() => done(), 2000));
+        await wait((2000));
         for(let pair of LARGE){
             if(cnt==counter && pair[0].color!='red') pair[0].color = 'green';
             if(cnt==counter && pair[1].color!='red') pair[1].color = 'green';
             candidates.push(pair[0]);
             candidates.push(pair[1]);
         }
-        await new Promise(done => setTimeout(() => done(), 2000));
+        await wait((2000));
     }  
     if(cnt == counter) temp_lines.length = 0;
     if(cnt == counter) drawTempLineFromMid({x:a,y:0},{x:a,y:600},1,'blue');
-    await new Promise(done => setTimeout(() => done(), 2000));
+    await wait((2000));
 
     return upper_bridge(candidates,a,sign,cnt);
 }

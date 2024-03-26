@@ -30,6 +30,21 @@ randBtn.addEventListener('click', async() => {
     drawRandomPoints(10);
 });
 
+document.getElementById('switchInput').addEventListener('change', function() {
+        document.getElementById('nextBtn').click();
+});
+
+async function wait(time = 2000) {
+    const switchInput = document.getElementById('switchInput');
+    if (switchInput.checked) {
+      await new Promise(resolve => setTimeout(resolve, time)); // Wait for 2 seconds
+    } else {
+      await new Promise(resolve => {
+        document.getElementById('nextBtn').addEventListener('click', resolve);
+      });
+    }
+  }
+
 // Jarvis March Convex Hull algorithm
 const jarvisMarchBtn = document.getElementById('jarvisMarchBtn');
 jarvisMarchBtn.addEventListener('click', async () => {
