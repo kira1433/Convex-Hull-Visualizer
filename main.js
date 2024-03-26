@@ -1,49 +1,49 @@
-// Add event listener for mouse clicks
-canvas.addEventListener('click', (event) => {
-    lines.length = 0;
+var jarvis_cnt = 0, kirk_cnt = 0;
+canvas.addEventListener('click', async(event) => {
+    await clear();
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
     points.push({ x, y });
-    drawPrevious();
+    drawCurrent();
 });
+
+async function clear() {
+    jarvis_cnt++;
+    kirk_cnt++;
+    lines.length = 0;
+    temp_lines.length = 0;
+    drawCurrent();
+}
 
 // Add event listener for clear button
 const clearBtn = document.getElementById('clearBtn');
-clearBtn.addEventListener('click', () => {
-    points.length = 0; // Clear the points array
-    lines.length = 0;
-    drawPrevious(); // Redraw the canvas (now empty)
+clearBtn.addEventListener('click', async() => {
+    points.length = 0;
+    await clear();
 });
 
 // Add event listener for rand button
 const randBtn = document.getElementById('randBtn');
-randBtn.addEventListener('click', () => {
+randBtn.addEventListener('click', async() => {
+    points.length = 0;
+    await clear();
     drawRandomPoints();
 });
 
 // Jarvis March Convex Hull algorithm
 const jarvisMarchBtn = document.getElementById('jarvisMarchBtn');
 jarvisMarchBtn.addEventListener('click', async () => {
-    lines.length = 0;
-    drawPrevious();
-    const hull = jarvisMarch(points);
-    for(let i=0;i<hull.length;i++){
-        await new Promise(done => setTimeout(() => done(), 1000));  
-        animateLine([hull[i]], [hull[(i+1)%hull.length]]);
-    }
+    await clear();
+    jarvisMarch(points, jarvis_cnt);
 });
 
 // Kirkpatrick-Seidel Convex Hull algorithm
 const kirkpatrickSeidelBtn = document.getElementById('kirkpatrickSeidelBtn');
 kirkpatrickSeidelBtn.addEventListener('click', async () => {
-    lines.length = 0;
-    drawPrevious();
-    const hull = kirkpatrickSeidel(points);
-    for(let i=0;i<hull.length;i++){
-        await new Promise(done => setTimeout(() => done(), 1000));  
-        animateLine([hull[i]], [hull[(i+1)%hull.length]]);
-    }
+    await clear();
+    kirkpatrickSeidel(points, kirk_cnt);
 });
 
+setInterval(drawCurrent, 5);
 drawRandomPoints();

@@ -2,7 +2,7 @@ function checkEqual(a, b, tolerance = 1e-6) {
     return Math.abs(a - b) <= tolerance;
   }
 
-function kirkpatrickSeidel(points) {
+function kirkpatrickSeidel(points, cnt) {
     if (points.length < 3) return points;
     
     let p_umin = points[0],p_umax = points[points.length-1];
