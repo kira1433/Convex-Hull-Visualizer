@@ -42,7 +42,11 @@ jarvisMarchBtn.addEventListener('click', async () => {
 const kirkpatrickSeidelBtn = document.getElementById('kirkpatrickSeidelBtn');
 kirkpatrickSeidelBtn.addEventListener('click', async () => {
     await clear();
-    kirkpatrickSeidel(points, kirk_cnt);
+    const hull = kirkpatrickSeidel(points, kirk_cnt);
+    for(let i = 0; i < hull.length; i++){
+        await new Promise(done => setTimeout(() => done(), 2000));
+        drawLine(hull[i],hull[(i+1)%hull.length],200,'red');
+    }
 });
 
 setInterval(drawCurrent, 5);

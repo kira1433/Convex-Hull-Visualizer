@@ -1,6 +1,9 @@
 // Jarvis March Convex Hull algorithm
 async function jarvisMarch(points , cnt) {
-    if (points.length < 3) return points;
+    if (points.length == 2){
+        if(cnt == jarvis_cnt) drawLine(points[0],points[1],200,'red');
+    }
+    if(points.length < 3) return;
 
     function orientation(p, q, r) {
         let val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
@@ -27,22 +30,26 @@ async function jarvisMarch(points , cnt) {
             if (orientation(points[p], points[i], points[q]) == 2 || q== i){
                 q = i;
 //dont edit from here
-                if(cnt != jarvis_cnt) return;
-                if(!hull.includes(points[i]) || (hull.length!=2 && points[i]==hull[0]))drawTempLine(points[p],points[i],100,'green');
+                if(hull.length<2 || points[i]!=hull[hull.length-2]){
+                    if(cnt == jarvis_cnt) drawTempLine(points[p],points[i],100,'green');
+                    await new Promise(done => setTimeout(() => done(), 200));
+                }
             }
             else{
-                if(cnt != jarvis_cnt) return;
-                if(!hull.includes(points[i]) || (hull.length!=2 && points[i]==hull[0]))drawTempLine(points[p],points[i],100,'blue');
+                if(hull.length<2 || points[i]!=hull[hull.length-2]){
+                    if(cnt == jarvis_cnt) drawTempLine(points[p],points[i],100,'blue');
+                    await new Promise(done => setTimeout(() => done(), 200));
+                }
             }
         }
 
-        await new Promise(done => setTimeout(() => done(), 2000));
-        if(cnt != jarvis_cnt) return;
-        drawLine(points[p],points[q],200,'red');
-        temp_lines.length = 0;
+        await new Promise(done => setTimeout(() => done(), 1000));
+        if(cnt == jarvis_cnt) drawLine(points[p],points[q],200,'red');
+        if(cnt == jarvis_cnt) temp_lines.length = 0;
+        await new Promise(done => setTimeout(() => done(), 1200));
 //dont edit to here
         p = q;
     } while (p != leftmost);
 
-    return hull;
+    return;
 }
