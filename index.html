@@ -3,35 +3,48 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Interactive Plot</title>
+  <title>Convex Hull Visualizer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
     body {
-      font-family: 'Poppins', sans-serif;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #f6d365, #fda085);
-      background-size: 200% 200%;
-      animation: gradientAnimation 4s ease infinite;
+        font-family: 'Poppins', sans-serif;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+        padding: 0;
+        background: linear-gradient(135deg, #f6d365, #fda085);
+        background-size: 200% 200%; /* Increase background size for smoother animation */
+        animation: gradientAnimation 10s ease infinite;
+    }
+
+    #intro-text {
+        font-size: 2.5rem;
+        font-weight: 600;
+        text-align: center;
+        /* animation: fadeIn 2s forwards; */
+        background: linear-gradient(135deg, #f32170, #ff6b08, #cf23cf, #eedd44, #f32170, #ff6b08, #cf23cf, #eedd44);
+        background-size: 400% 400%; /* Increase background size for smoother animation */
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        -webkit-user-select: none;
+        animation: gradientAnimation 10s ease infinite;
     }
 
     @keyframes gradientAnimation {
-      0% {
-        background-position: 0% 0%;
-      }
-      50% {
-        background-position: 100% 100%;
-      }
-      100% {
-        background-position: 0% 0%;
-      }
+        0% {
+            background-position: 0% 0%;
+        }
+        50% {
+            background-position: 100% 100%;
+        }
+        100% {
+            background-position: 0% 0%;
+        }
     }
 
     .container {
@@ -177,10 +190,69 @@
     .slider.round:before {
       border-radius: 50%;
     }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+      to {
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .intro-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(255, 255, 255, 1); /* Semi-transparent white */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 2;
+      overflow: hidden; /* Ensure the ripple effect stays within the intro overlay */
+    }
+
+    .intro-overlay .intro {
+      position: relative;
+      z-index: 2;
+    }
+    .ripple {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    position: fixed;
+    background: linear-gradient(135deg, #f6d365, #fda085);
+    opacity: 0.4;
+    background-size: 200% 200%; /* Increase background size for smoother animation */
+    animation: gradientAnimation 2s ease infinite;
+    }
+
+    @keyframes ripple-effect {
+        to {
+            transform:scale(1000);
+            opacity: 0.4;
+        }
+    }
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="intro-overlay" id="intro">
+    <div class="intro">
+      <h1 id="intro-text">Convex Hull Visualizer</h1>
+    </div>
+  </div>
+  <div class="container hidden" id="mainContent">
     <canvas id="myCanvas" width="600" height="600"></canvas>
     <div class="controls">
       <textarea placeholder="Information will be displayed here..." disabled></textarea>
@@ -190,22 +262,51 @@
         <button id="jarvisMarchBtn"><i class="fas fa-walking"></i> Jarvis March</button>
         <button id="kirkpatrickSeidelBtn"><i class="fas fa-project-diagram"></i> Kirkpatrick-Seidel</button>
         <div class="switch-container">
-            <button id="nextBtn"><i class="fas fa-arrow-right"></i> Next</button>
-            <label class="switch">
-              <input id="switchInput" type="checkbox">
-              <span class="slider round"></span>
-            </label>
+          <button id="nextBtn"><i class="fas fa-arrow-right"></i> Next</button>
+          <label class="switch">
+            <input id="switchInput" type="checkbox">
+            <span class="slider round"></span>
+          </label>
         </div>
-        
       </div>
-      
     </div>
   </div>
-
   <script src="jarvis.js"></script>
   <script src="kirkpatrick.js"></script>
   <script src="random.js"></script>
   <script src="helper.js"></script>
   <script src="main.js"></script>
+  <script>
+    // Function to handle the fade-out animation for intro and fade-in animation for main content
+    function fadePages(e) {
+      var intro = document.getElementById('intro');
+      var mainContent = document.getElementById('mainContent');
+
+      // Add fade-out animation to intro
+      intro.style.animation = 'fadeOut 2s forwards';
+
+      // Add fade-in animation to main content
+      mainContent.style.animation = 'fadeIn 2s forwards';
+
+      const ripple = document.createElement("div");
+  
+        ripple.className = "ripple";
+        document.body.appendChild(ripple);
+
+        ripple.style.left = `${e.clientX}px`;
+        ripple.style.top = `${e.clientY}px`; 
+        ripple.style.animation = `ripple-effect 2s  linear`;
+        ripple.onanimationend = () => {
+            document.body.removeChild(ripple);
+            
+        }
+
+      intro.style.zIndex = -1;
+    }
+    // Add event listener to the intro overlay for click event to trigger the fadePages function
+    document.getElementById('intro').addEventListener('click', function(e) {
+      fadePages(e);
+    });
+  </script>
 </body>
 </html>

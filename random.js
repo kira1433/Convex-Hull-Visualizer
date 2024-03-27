@@ -13,8 +13,8 @@ function generateRandomPoints(numPoints = 10) {
     let points = [];
     for (let i = 0; i < numPoints; i++) {
         points.push({
-            x: Math.max(0, Math.min(generateNormalPoint(mean, variance), 600)),
-            y: Math.max(0, Math.min(generateNormalPoint(mean, variance), 600))
+            x: Math.max(5, Math.min(generateNormalPoint(mean, variance), 595)),
+            y: Math.max(5, Math.min(generateNormalPoint(mean, variance), 595))
         });
     }
     return points;
