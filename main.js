@@ -121,8 +121,11 @@ nextBtn.addEventListener('click', async () => {
 
 const switchInput = document.getElementById('switchInput');
 switchInput.addEventListener('change', function() {
-  if(switchInput.checked) {
+  if(kirkpatrickSeidelRequested && switchInput.checked) {
     document.getElementById('kirkpatrickSeidelBtn').click();
+  }
+  if(jarvisMarchRequested && switchInput.checked) {
+    document.getElementById('jarvisMarchBtn').click();
   }
 });
 
