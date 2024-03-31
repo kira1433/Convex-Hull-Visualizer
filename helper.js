@@ -1,7 +1,7 @@
 const canvas = document.getElementById('myCanvas');
 const ctx = canvas.getContext('2d');
 const points = [], lines = [], temp_lines = [];
-let currentStep = 0, marchStep = 0, jarvisMarchRequested = false, kirkpatrickSeidelRequested = false;
+let currentStep = 0, marchStep = 0, jarvisMarchRequested = false, kirkpatrickSeidelRequested = false, fastForwardRequested = true;;
 
 function drawCurrent() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);

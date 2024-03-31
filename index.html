@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
     body {
@@ -104,8 +105,8 @@
     }
 
     textarea {        
-      width: 260px;
-      height: 110px;
+      width: 390px;
+      height: 150px;
       padding: 20px;
       margin-bottom: 20px;
       font-family: 'Poppins', sans-serif;
@@ -238,6 +239,20 @@
     animation: gradientAnimation 2s ease infinite;
     }
 
+    .doc-link {
+      text-decoration: none; /* Remove underline */
+      color: #0077b6; /* Set link color */
+      font-weight: bold; /* Make the text bold */
+      padding: 8px 16px; /* Add some padding */
+      background-color: #f3f3f3; /* Add a background color */
+      border-radius: 4px; /* Add rounded corners */
+      transition: background-color 0.3s ease; /* Add a transition effect */
+    }
+
+    .doc-link:hover {
+      background-color: #ddd; /* Change background color on hover */
+    }
+
     @keyframes ripple-effect {
         to {
             transform:scale(1000);
@@ -255,12 +270,13 @@
   <div class="container hidden" id="mainContent">
     <canvas id="myCanvas" width="600" height="600"></canvas>
     <div class="controls">
-      <textarea id="textElement" placeholder="Information will be displayed here..." disabled></textarea>
+      <textarea id="textElement" placeholder="Turn on the slider to automatically go through the steps. For manually observing the steps, click on the algorithm you want to visualize." disabled></textarea>
       <div class="buttons">
         <button id="clearBtn"><i class="fas fa-eraser"></i> Clear</button>
         <button id="randBtn"><i class="fas fa-random"></i> Random</button>
         <button id="jarvisMarchBtn"><i class="fas fa-walking"></i> Jarvis March</button>
         <button id="kirkpatrickSeidelBtn"><i class="fas fa-project-diagram"></i> Kirkpatrick-Seidel</button>
+        <!-- <button id="fastForwardBtn"><i class="fas fa-fast-forward"></i>Fast Forward</button> -->
         <div class="switch-container">
           <button id="nextBtn"><i class="fas fa-arrow-right"></i> Next</button>
           <label class="switch">
@@ -269,7 +285,7 @@
           </label>
         </div>
       </div>
-      <a href="../Documentation/index.html">Documentation</a>
+      <a href="./Documentation/index.html" class="doc-link">Documentation</a>
     </div>
   </div>
   <script src="jarvis.js"></script>

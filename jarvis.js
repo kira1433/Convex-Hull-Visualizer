@@ -1,6 +1,6 @@
 // Jarvis March Convex Hull algorithm
 async function jarvisMarch(points , cnt) {
-    await wait((200));
+    // await wait((200));
     if (points.length == 2){
         if(cnt == jarvis_cnt) drawLine(points[0],points[1],200,'red');
     }
