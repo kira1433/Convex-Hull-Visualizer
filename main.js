@@ -101,7 +101,7 @@ function updateTextElement() {
         textElement.value = "Slopes from current left-most point to all other points have been marked";
         break;
       case 5:
-        textElement.value = "Draw the bridge line - change to lingo of Jarvis March";
+        textElement.value = "Draw the hull line";
         break;
       case 6:
         textElement.value = "Convex-Hull constructed using Jarvis-March Algorithm";
