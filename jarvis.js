@@ -32,6 +32,7 @@ async function jarvisMarch(points , cnt) {
             drawTempLine(points[p],points[q],100,'green');
         }
         marchStep = 1;
+        updateTextElement();
         await wait((200));
 
         for (let i = 0; i < points.length; i++) {
@@ -46,6 +47,7 @@ async function jarvisMarch(points , cnt) {
                         drawTempLine(points[p],points[i],100,'green');
                     }
                     marchStep = 2;
+                    updateTextElement();
                     await wait((200));
                 }
             }
@@ -53,16 +55,19 @@ async function jarvisMarch(points , cnt) {
                 if(hull.length<2 || points[i]!=hull[hull.length-2]){
                     if(cnt == counter) drawTempLine(points[p],points[i],100,'blue');
                     marchStep = 3;
+                    updateTextElement();
                     await wait((200));
                 }
             }
         }
 
         marchStep = 4;
+        updateTextElement();
         await wait((1000));
         if(cnt == counter) drawLine(points[p],points[q],200,'red');
         if(cnt == counter) temp_lines.length = 0;
         marchStep = 5;
+        updateTextElement();
         await wait((1200));
         if(cnt == counter){
             for(let p of points)p.color = 'black';
@@ -72,6 +77,7 @@ async function jarvisMarch(points , cnt) {
     } while (p != leftmost);
 
     marchStep = 6;
+    updateTextElement();
     await wait(2000)
 
     return;

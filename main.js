@@ -101,7 +101,7 @@ function updateTextElement() {
         textElement.value = "Slopes from current left-most point to all other points have been marked";
         break;
       case 5:
-        textElement.value = "Draw the hull line";
+        textElement.value = "From all the marked lines, pick the latest drawn green line as an edge in the convex hull";
         break;
       case 6:
         textElement.value = "Convex-Hull constructed using Jarvis-March Algorithm";
