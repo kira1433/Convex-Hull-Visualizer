@@ -40,14 +40,17 @@ FastInput.addEventListener('click', function() {
   if(fastRequested){
     this.checked = false;
     fastRequested = false;
+    clear();
+    updateTextElement();
     return;
   }
   else if(autoRequested){
     autoRequested = false;
-    clear();
-    updateTextElement();
   }
+  clear();
+  updateTextElement();
   fastRequested = true;
+
 });
 // Add event listener for clear button
 const clearBtn = document.getElementById('clearBtn');
