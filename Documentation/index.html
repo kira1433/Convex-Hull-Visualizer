@@ -48,7 +48,7 @@
             
             <h3>Run Time Analysis:</h3>
             <p>The Kirkpatrick-Seidel algorithm achieves an optimal time complexity of \(O(n \log h)\), where \(n\) is the number of input points and \(h\) is the number of vertices on the convex hull. This complexity makes it one of the fastest algorithms for computing the convex hull in practice.</p>
-            <img src="../Documentation/Kirkpatrik_Seidel.jpg" alt="Kirkpatrick Seidel Algorithm">
+            <img src="../Documentation/Kirkpatrik_Seidel_Graph.jpg" alt="Kirkpatrick Seidel Algorithm">
 
         </section>
 
@@ -56,7 +56,7 @@
             <h2>Jarvis March</h2>
 
             <h3>Description:</h3>
-            <p>Jarvis's March, also known as the gift-wrapping algorithm, is a method used to compute the convex hull of a set of points in the plane. The algorithm operates by iteratively finding the next vertex of the convex hull in counterclockwise order. While its time complexity of \(O(nh)\) is generally less efficient than Graham's scan for large values of \(h\) (the number of vertices on the hull), it proves superior when \(h\) is asymptotically smaller than the logarithm of \(n\), denoted as \(h = o(\log n)\).</p>
+            <p>Jarvis's March, is a method used to compute the convex hull of a set of points in the plane. The algorithm operates by iteratively finding the next vertex of the convex hull in counterclockwise order. While its time complexity of \(O(nh)\) is generally less efficient than Graham's scan for large values of \(h\) (the number of vertices on the hull), it proves superior when \(h\) is asymptotically smaller than the logarithm of \(n\), denoted as \(h = o(\log n)\).</p>
 
             <h3>Algorithm:</h3>
             <p>The process begins by selecting an initial point, \(v_1\), which is guaranteed to be on the convex hull. This point is typically chosen as the one with the smallest \(y\)-coordinate. Subsequently, the algorithm repeatedly identifies the next vertex of the hull by minimizing the turning angle between the current vertex and the previous two vertices. The turning angle of a point \(r\) with respect to points \(p\) and \(q\) is the counterclockwise angle between the directed line segments \(pq\) and \(qr\).</p>
@@ -80,7 +80,7 @@
 
             <h3>Run Time Analysis:</h3>
             <p>In terms of runtime analysis, the computation of \(v_1\) takes \(O(n)\) time, and each iteration of the algorithm can be implemented in \(O(n)\) time. Consequently, the overall time complexity of Jarvis's March is \(O(n + nh) = O(nh)\), where \(h\) represents the number of vertices on the convex hull.</p>
-            <img src="../Documentation/Jarvis_March.jpg" alt="Jarvis March Algorithm">
+            <img src="../Documentation/Jarvis_March_Graph.jpg" alt="Jarvis March Algorithm">
         </section>
 
         <section>
