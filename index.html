@@ -4,11 +4,14 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Convex Hull Visualizer</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800px' height='800px' viewBox='0 0 100 100'%3E%3Cpath d='M68.525 4.428a3.5 3.5 0 0 0-.206.061L19.405 20.534a3.5 3.5 0 0 0-2.293 2.432L5.207 67.997a3.5 3.5 0 0 0 1.859 4.046l48.138 23.294a3.5 3.5 0 0 0 4.4-1.155l34.679-49.905a3.5 3.5 0 0 0 .076-3.88L72.361 5.93a3.5 3.5 0 0 0-3.836-1.503zm-.603 7.558l18.691 29.287l-7.914 2.695l1.612 4.732l3.111-1.06L59.3 82.352l.016-2.105l-4.998-.036l-.052 6.893l-41.553-20.107l10.682-40.405zm6.045 33.594L64.5 48.804l1.612 4.732l9.467-3.224zm-14.199 4.836l-3.567 1.214a2.5 2.5 0 0 0-1.694 2.349l-.045 6.232l5 .037l.032-4.457l1.886-.643zM54.425 65.21l-.072 10l5 .035l.072-9.998z' fill='%23000000'/%3E%3C/svg%3E" type="image/svg+xml">
+  
   <style>
     body {
         font-family: 'Poppins', sans-serif;
@@ -110,7 +113,7 @@
       padding: 20px;
       margin-bottom: 20px;
       font-family: 'Poppins', sans-serif;
-      font-size: 14px;
+      font-size: 16px;
       border: none;
       /* border-radius: 8px; */
       /* box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); */
@@ -122,75 +125,93 @@
       /* opacity: 0.8; */
       /* read-only: true; */
     }
-
+    
     .switch-container {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-bottom: 10px;
-    }
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+  }
 
-    .switch-label {
-      font-size: 14px;
-      font-weight: 600;
-      margin-right: 10px;
-      color: #333;
-    }
+  .switch {
+    position: relative;
+    padding: auto;
+    padding: 16.4px 50px;
+    margin: 5px;
+    color: white;
+    background-color: #ddd;
+    overflow: hidden; /* Ensure the slider stays within the switch container */
 
-    .switch {
-      position: relative;
-      display: inline-block;
-      width: 60px;
-      height: 34px;
-    }
-
-    .switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
-
-    .slider {
-      position: absolute;
+    border: none;
+      border-radius: 20px;
       cursor: pointer;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background-color: #ccc;
-      -webkit-transition: .4s;
-      transition: .4s;
+      transition: background-color 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  }
+
+  
+  .switch:hover {
+      background-color: #f6d365;
+      color: #333;
+      transform: translateY(-2px);
     }
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 26px;
-      width: 26px;
-      left: 4px;
-      bottom: 4px;
-      background-color: white;
-      -webkit-transition: .4s;
-      transition: .4s;
-    }
 
-    input:checked + .slider {
-      background-color: #ff7f2a;
-    }
+.switch input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
 
-    input:checked + .slider:before {
-      -webkit-transform: translateX(26px);
-      -ms-transform: translateX(26px);
-      transform: translateX(26px);
-    }
+.option {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  z-index: 1;
+  transition: left 0.3s ease;
+}
 
-    .slider.round {
-      border-radius: 34px;
-    }
+.option:nth-of-type(1) {
+  left: 10%;
+}
 
-    .slider.round:before {
-      border-radius: 50%;
-    }
+.option:nth-of-type(2) {
+  right: 10%;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  width: 55%; /* Adjust width as needed */
+  height: 100%; /* Adjust height as needed */
+  background-color: #ff6e0e; /* Adjust slider color */
+  border-radius: 20px;
+  transition: left 0.3s ease;
+}
+
+input[type="radio"]:not(:checked) ~ .slider {
+  left: -100%; /* Move the slider out of the viewport */
+}
+
+input[type="radio"]:nth-of-type(1):checked ~ .slider {
+  left: 0%;
+}
+
+input[type="radio"]:nth-of-type(2):checked ~ .slider {
+  left: 45%;
+}
+/* 
+input[type="radio"]:checked ~ .slider::before {
+  transform: translateX(60px);
+} */
+
 
     @keyframes fadeOut {
       from {
@@ -258,7 +279,7 @@
             transform:scale(1000);
             opacity: 0.4;
         }
-    }
+    }    
   </style>
 </head>
 <body>
@@ -276,20 +297,28 @@
         <button id="randBtn"><i class="fas fa-random"></i> Random</button>
         <button id="jarvisMarchBtn"><i class="fas fa-walking"></i> Jarvis March</button>
         <button id="kirkpatrickSeidelBtn"><i class="fas fa-project-diagram"></i> Kirkpatrick-Seidel</button>
-        <!-- <button id="fastForwardBtn"><i class="fas fa-fast-forward"></i>Fast Forward</button> -->
         <div class="switch-container">
           <button id="nextBtn"><i class="fas fa-arrow-right"></i> Next</button>
-          <label class="switch">
-            <input id="switchInput" type="checkbox">
-            <span class="slider round"></span>
-          </label>
+          
+          <div class="switch">
+            <!-- <input type="radio" id="option1" name="options" value="option1"> -->
+            <!-- <label for="option1" class="option">1</label> -->
+            <input type="radio" id="option2" name="options" value="option2">
+            <label for="option2" class="option">Auto</label>
+            <input type="radio" id="option3" name="options" value="option3">
+            <label for="option3" class="option">Fast</label>
+            <span class="slider"></span>
+          </div>
+
         </div>
       </div>
       <a href="./Documentation/index.html" class="doc-link">Documentation</a>
     </div>
   </div>
   <script src="jarvis.js"></script>
+  <script src="jarvis_fast.js"></script>
   <script src="kirkpatrick.js"></script>
+  <script src="kirkpatrick_fast.js"></script>
   <script src="random.js"></script>
   <script src="helper.js"></script>
   <script src="main.js"></script>
