@@ -28,7 +28,7 @@ clearBtn.addEventListener('click', async() => {
     fastForwardRequested = false;
     jarvisMarchRequested = false;
     kirkpatrickSeidelRequested = false;
-    textElement.value = "Turn on the slider to automatically go through the steps. For manually observing the steps, click on the algorithm you want to visualize.";
+    textElement.value = "Select option 1 to manually go through the steps, option 2 for automatically moving using time spaced steps, and option 3 to fast forward and directly get to the final convex hull.";
     await clear();
 });
 
@@ -41,7 +41,7 @@ randBtn.addEventListener('click', async() => {
     fastForwardRequested = false;
     jarvisMarchRequested = false;
     kirkpatrickSeidelRequested = false;
-    textElement.value = "Turn on the slider to automatically go through the steps. For manually observing the steps, click on the algorithm you want to visualize.";
+    textElement.value = "Select option 1 to manually go through the steps, option 2 for automatically moving using time spaced steps, and option 3 to fast forward and directly get to the final convex hull.";
     await clear();
     drawRandomPoints(10);
 });
