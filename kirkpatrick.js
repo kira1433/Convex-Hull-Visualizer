@@ -19,14 +19,17 @@ async function kirkpatrickSeidel(points, cnt) {
         if(p.x > p_umin.x && p.x < p_umax.x && (p.y - p_umin.y)*(p_umax.x - p_umin.x) - (p.x - p_umin.x)*(p_umax.y - p_umin.y) < 0) T_u.push(p)
         if(p.x > p_lmin.x && p.x < p_lmax.x && (p.y - p_lmin.y)*(p_lmax.x - p_lmin.x) - (p.x - p_lmin.x)*(p_lmax.y - p_lmin.y) > 0) T_l.push(p)
     }
+    if(cnt==counter) {
+        for(let p of points)p.color = 'black';
+    }
     await upper_hull(p_umin,p_umax,T_u,-1,-1,cnt);
     await upper_hull(p_lmin,p_lmax,T_l,1,1,cnt);
 
     if(cnt==counter) drawLineFromMid(p_lmin,p_umin,200,'red');
     if(cnt==counter) drawLineFromMid(p_lmax,p_umax,200,'red');
-    currentStep = 9;
-    updateTextElement();
-    await wait((1200));
+    if(cnt==counter) Step = 9;
+    if(cnt==counter) updateTextElement();
+    await wait();
 }
 
 function median_of_medians(list, i){
@@ -61,9 +64,9 @@ async function upper_hull(p_min,p_max,T_,xsign,ysign,cnt){
     else var a = median_of_medians(T.map(p => p.x) , (T.length / 2) | 0);
 
     if(cnt == counter) drawTempLineFromMid({x:a,y:0},{x:a,y:600},40,'blue');
-    currentStep = 1;
-    updateTextElement();
-    await wait((500));
+    if(cnt==counter) Step = 1;
+    if(cnt==counter) updateTextElement();
+    await wait();
 
     let p = await upper_bridge(T , a,ysign,cnt);
     let p_l = p[0], p_r = p[1];
@@ -76,9 +79,9 @@ async function upper_hull(p_min,p_max,T_,xsign,ysign,cnt){
 
     if(cnt!=counter) p_min.color = 'black';
     if(cnt!=counter) p_max.color = 'black';
-    currentStep = 8;
-    updateTextElement();
-    await wait((1200));
+    if(cnt==counter) Step = 8;
+    if(cnt==counter) updateTextElement();
+    await wait();
     if(cnt==counter) p_min.color = 'black';
     if(cnt==counter) p_max.color = 'black';
 
@@ -123,9 +126,9 @@ async function upper_bridge(S , a , sign,cnt){
     for(let p of pairs){
         if(cnt == counter) drawTempLine(p[0],p[1],50,'black');
     }
-    currentStep = 2;
-    updateTextElement();
-    await wait((2000));
+    if(cnt==counter) Step = 2;
+    if(cnt==counter) updateTextElement();
+    await wait();
 
     // if(S.length == 2) return pairs[0];
     if(S.length % 2){
@@ -172,9 +175,9 @@ async function upper_bridge(S , a , sign,cnt){
     for(let p of SMALL){
         if(cnt == counter) drawTempLine(p[0],p[1],1,'orange');
     }
-    currentStep = 3;
-    updateTextElement();
-    await wait((2000));
+    if(cnt==counter) Step = 3;
+    if(cnt==counter) updateTextElement();
+    await wait();
     
     for(let p of S){
         let c = p.y - sign*K*p.x;
@@ -182,9 +185,9 @@ async function upper_bridge(S , a , sign,cnt){
         let y1 = sign*K*1000 + c
         if(cnt == counter) drawTempLineFromMid({x:-1000,y:y0},{x:1000,y:y1},1,'violet');
     }
-    currentStep = 4;
-    updateTextElement();
-    await wait((2000));
+    if(cnt==counter) Step = 4;
+    if(cnt==counter) updateTextElement();
+    await wait();
 
 
     let mx = -Infinity;
@@ -222,34 +225,34 @@ async function upper_bridge(S , a , sign,cnt){
         if(p.x > p_m.x ) p_m = p;
     }
     if(p_k.x <= a && p_m.x>a) return [p_k,p_m];
-    currentStep = 5;
-    updateTextElement();
-    await wait((2000));
+    if(cnt==counter) Step = 5;
+    if(cnt==counter) updateTextElement();
+    await wait();
 
     if(p_m.x <= a){
         for(let pair of LARGE){
             if(cnt==counter && pair[1].color!='red') pair[1].color = 'green';
             candidates.push(pair[1]);
         }
-        currentStep = 6;
-        updateTextElement();
-        await wait((2000));
+        if(cnt==counter) Step = 6;
+        if(cnt==counter) updateTextElement();
+        await wait();
         for(let pair of EQUAL){
             if(cnt==counter && pair[1].color!='red') pair[1].color = 'green';
             candidates.push(pair[1]);
         }
-        currentStep = 6;
-        updateTextElement();
-        await wait((2000));
+        if(cnt==counter) Step = 6;
+        if(cnt==counter) updateTextElement();
+        await wait();
         for(let pair of SMALL){
             if(cnt==counter && pair[0].color!='red') pair[0].color = 'green';
             if(cnt==counter && pair[1].color!='red') pair[1].color = 'green';
             candidates.push(pair[0]);
             candidates.push(pair[1]);
         }
-        currentStep = 6;
-        updateTextElement();
-        await wait((2000));
+        if(cnt==counter) Step = 6;
+        if(cnt==counter) updateTextElement();
+        await wait();
     }
 
     if(p_k.x > a){
@@ -257,96 +260,31 @@ async function upper_bridge(S , a , sign,cnt){
             if(cnt==counter && pair[0].color!='red') pair[0].color = 'green';
             candidates.push(pair[0]);
         }
-        currentStep = 6;
-        updateTextElement();
-        await wait((2000));
+        if(cnt==counter) Step = 6;
+        if(cnt==counter) updateTextElement();
+        await wait();
         for(let pair of EQUAL){
             if(cnt==counter && pair[0].color!='red') pair[0].color = 'green';
             candidates.push(pair[0]);
         }
-        currentStep = 6;
-        updateTextElement();
-        await wait((2000));
+        if(cnt==counter) Step = 6;
+        if(cnt==counter) updateTextElement();
+        await wait();
         for(let pair of LARGE){
             if(cnt==counter && pair[0].color!='red') pair[0].color = 'green';
             if(cnt==counter && pair[1].color!='red') pair[1].color = 'green';
             candidates.push(pair[0]);
             candidates.push(pair[1]);
         }
-        currentStep = 6;
-        updateTextElement();
-        await wait((2000));
+        if(cnt==counter) Step = 6;
+        if(cnt==counter) updateTextElement();
+        await wait();
     }  
     if(cnt == counter) temp_lines.length = 0;
     if(cnt == counter) drawTempLineFromMid({x:a,y:0},{x:a,y:600},1,'blue');
-    currentStep = 7;
-    updateTextElement();
-    await wait((2000));
+    if(cnt==counter) Step = 7;
+    if(cnt==counter) updateTextElement();
+    await wait();
 
     return upper_bridge(candidates,a,sign,cnt);
 }
-
-// function upper_bridge(S , a , sign){
-//     const pairs = [];
-//     const candidates = [];
-//     for(let i = 0; i+1 < S.length; i+=2){
-//         if(S[i].x <= S[i+1].x){
-//             pairs.push([S[i], S[i+1]]);
-//         } else {
-//             pairs.push([S[i+1], S[i]]);
-//         }
-//     }
-//     if(S.length == 2) return pairs[0];
-//     if(S.length % 2) candidates.push(S[S.length-1]);
-//     const slopes = [];
-//     for(let pair of pairs){
-//         if(checkEqual(pair[0].x, pair[1].x)){
-//             if(sign*pair[0].y > sign*pair[1].y) candidates.push(pair[0]);
-//             else candidates.push(pair[1]);
-//         } 
-//         else slopes.push((sign*pair[0].y - sign*pair[1].y) / (pair[0].x - pair[1].x));
-//     }
-//     if(slopes.length == 0)return upper_bridge(candidates,a,sign);
-
-//     const K = median_of_medians(slopes, (slopes.length / 2) | 0);
-//     const SMALL=[],EQUAL=[],LARGE=[];
-//     for(let pair of pairs){
-//         if(!checkEqual(pair[0].x, pair[1].x)){
-//             const slope = (sign*pair[0].y - sign*pair[1].y) / (pair[0].x - pair[1].x);
-//             if(slope < K) SMALL.push(pair);
-//             else if(checkEqual(slope, K)) EQUAL.push(pair);
-//             else LARGE.push(pair);
-//         } 
-//     }
-//     let mx = -Infinity;
-//     for(let p of S){
-//         if(sign*p.y - K*p.x > mx) mx = sign*p.y - K*p.x;
-//     }
-//     const MAX = [];
-//     for(let p of S){
-//         if(checkEqual(sign*p.y - K*p.x, mx)) MAX.push(p);
-//     }
-//     let p_k = MAX[0],p_m = MAX[0];
-//     for(let p of MAX){
-//         if(p.x < p_k.x ) p_k = p;
-//         if(p.x > p_m.x ) p_m = p;
-//     }
-//     if(p_k.x <= a && p_m.x>a) return [p_k,p_m];
-//     if(p_m.x <= a){
-//         for(let pair of LARGE)candidates.push(pair[1]);
-//         for(let pair of EQUAL)candidates.push(pair[1]);
-//         for(let pair of SMALL){
-//             candidates.push(pair[0]);
-//             candidates.push(pair[1]);
-//         }
-//     }
-//     if(p_k.x > a){
-//         for(let pair of SMALL)candidates.push(pair[0]);
-//         for(let pair of EQUAL)candidates.push(pair[0]);
-//         for(let pair of LARGE){
-//             candidates.push(pair[0]);
-//             candidates.push(pair[1]);
-//         }
-//     }  
-//     return upper_bridge(candidates,a,sign);
-// }

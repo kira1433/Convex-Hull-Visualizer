@@ -10,50 +10,76 @@ canvas.addEventListener('click', async(event) => {
 
 async function clear() {
     counter++;
-    currentStep = 0;
-    marchStep = 0;
+    Step = 0;
     jarvisMarchRequested = false;
     kirkpatrickSeidelRequested = false;
     lines.length = 0;
     temp_lines.length = 0;
+    for(let p of points)p.color = 'black';
     drawCurrent();
 }
 
+
+const AutoInput = document.getElementById('option2');
+const FastInput = document.getElementById('option3');
+AutoInput.addEventListener('click', function() {
+  if(autoRequested){
+    this.checked = false;
+    autoRequested = false;
+    return;
+  }
+  else if(fastRequested){
+    fastRequested = false;
+    clear();
+    updateTextElement();
+  }
+  autoRequested = true;
+  document.getElementById('nextBtn').click();
+});
+FastInput.addEventListener('click', function() {
+  if(fastRequested){
+    this.checked = false;
+    fastRequested = false;
+    clear();
+    updateTextElement();
+    return;
+  }
+  else if(autoRequested){
+    autoRequested = false;
+  }
+  clear();
+  updateTextElement();
+  fastRequested = true;
+
+});
 // Add event listener for clear button
 const clearBtn = document.getElementById('clearBtn');
 clearBtn.addEventListener('click', async() => {
     points.length = 0;
-    currentStep = 0;
-    marchStep = 0;
-    fastForwardRequested = false;
-    jarvisMarchRequested = false;
-    kirkpatrickSeidelRequested = false;
-    textElement.value = "Select option 1 to manually go through the steps, option 2 for automatically moving using time spaced steps, and option 3 to fast forward and directly get to the final convex hull.";
     await clear();
-});
+    textElement.value = "Turn on the slider to automatically go through the steps. For manually observing the steps, click on the algorithm you want to visualize.";
+  });
 
 // Add event listener for rand button
 const randBtn = document.getElementById('randBtn');
 randBtn.addEventListener('click', async() => {
     points.length = 0;
-    currentStep = 0;
-    marchStep = 0;
-    fastForwardRequested = false;
+    Step = 0;
+    Step = 0;
     jarvisMarchRequested = false;
     kirkpatrickSeidelRequested = false;
-    textElement.value = "Select option 1 to manually go through the steps, option 2 for automatically moving using time spaced steps, and option 3 to fast forward and directly get to the final convex hull.";
     await clear();
+    textElement.value = "Turn on the slider to automatically go through the steps. For manually observing the steps, click on the algorithm you want to visualize.";
     drawRandomPoints(10);
-});
-
-document.getElementById('switchInput').addEventListener('change', function() {
-        document.getElementById('nextBtn').click();
 });
 
 function updateTextElement() {
   // Step-by-step mode
   if(kirkpatrickSeidelRequested) {
-    switch (currentStep) {
+    switch (Step) {
+      case 0:
+        textElement.value = "Convex Hull using the Kirkpatrick-Seidel Algorithm.";
+        break;
       case 1:
         textElement.value = "Draw a line 'L' which divides the point set into 2 equal halves on either side. Mark the points: p_min and p_min in red colour.";
         break;
@@ -87,7 +113,10 @@ function updateTextElement() {
     }
   }
   else if (jarvisMarchRequested) {
-    switch(marchStep) {
+    switch(Step) {
+      case 0:
+        textElement.value = "Convex Hull using the Jarvis-March Algorithm.";
+        break;
       case 1:
         textElement.value = "Drawing lines to the potential next points in green colour";
         break;
@@ -115,74 +144,43 @@ function updateTextElement() {
   }
 }
 
-// const fastForwardBtn = document.getElementById('fastForwardBtn');
-// fastForwardBtn.addEventListener('click', async() => {
-//   fastForwardRequested = true;
-
-//   const targetMessage = "Convex-Hull constructed using Jarvis-March Algorithm";
-//   const textElement = document.getElementById('textElement');
-
-//   while (textElement.value !== targetMessage) {
-//     document.getElementById('nextBtn').click();
-//   }
-
-//   fastForwardRequested = false;
-// });
-
 const nextBtn = document.getElementById('nextBtn');
 nextBtn.addEventListener('click', async () => {
     updateTextElement();
 });
 
-const switchInput = document.getElementById('switchInput');
-switchInput.addEventListener('change', function() {
-  if(kirkpatrickSeidelRequested && switchInput.checked) {
-    document.getElementById('kirkpatrickSeidelBtn').click();
-  }
-  if(jarvisMarchRequested && switchInput.checked) {
-    document.getElementById('jarvisMarchBtn').click();
-  }
-});
-
-async function wait(time = 2000) {
-    const switchInput = document.getElementById('switchInput');
-
-    // if(fastForwardRequested) {
-    //   await new Promise(resolve => setTimeout(resolve, 100, document.getElementById('nextBtn').click()));
-    // }
-
-    if (switchInput.checked) {
-      await new Promise(resolve => setTimeout(resolve, 5000, document.getElementById('nextBtn').click())); // Wait for 2 seconds
+async function wait(time) {
+    if(FastInput.checked) {
+      await new Promise(resolve => setTimeout(resolve, time));
+    } else
+    if (AutoInput.checked) {
+      await Promise.race([new Promise(resolve => setTimeout(resolve, 2500, updateTextElement())),new Promise(resolve => {document.getElementById('nextBtn').addEventListener('click', resolve);})  ]); 
     } else {
       await new Promise(resolve => {
         document.getElementById('nextBtn').addEventListener('click', resolve);
       });
     }
-  }
+  } 
 
 // Jarvis March Convex Hull algorithm
 const jarvisMarchBtn = document.getElementById('jarvisMarchBtn');
 jarvisMarchBtn.addEventListener('click', async () => {
-    currentStep = 0;
-    marchStep = 0;
-    jarvisMarchRequested = true;
-    document.getElementById('nextBtn').click();
     await clear();
     jarvisMarchRequested = true;
-    jarvisMarch(points, counter);
+    updateTextElement();
+    if(document.getElementById('option3').checked) jarvisMarch_fast(points, counter);
+    else jarvisMarch(points, counter);
 });
 
 // Kirkpatrick-Seidel Convex Hull algorithm
 const kirkpatrickSeidelBtn = document.getElementById('kirkpatrickSeidelBtn');
 kirkpatrickSeidelBtn.addEventListener('click', async () => {
-    currentStep = 0;
-    marchStep = 0;
-    kirkpatrickSeidelRequested = true;
-    document.getElementById('nextBtn').click();
     await clear();
     kirkpatrickSeidelRequested = true;
-    kirkpatrickSeidel(points, counter);
+    updateTextElement();
+    if(document.getElementById('option3').checked) kirkpatrickSeidel_fast(points, counter);
+    else kirkpatrickSeidel(points, counter);
 });
 
 setInterval(drawCurrent, 5);
-drawRandomPoints(10);
+takeTextInput();
