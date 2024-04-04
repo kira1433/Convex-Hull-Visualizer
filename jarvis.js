@@ -36,7 +36,7 @@ async function jarvisMarch(points , cnt) {
 
         for (let i = 0; i < points.length; i++) {
             // If i is more counterclockwise than current q, then update q
-            if (orientation(points[p], points[i], points[q]) == 2 && i!=q){
+            if (orientation(points[p], points[i], points[q]) == 2 && i!= (p + 1) % points.length){
                 q = i;
 //dont edit from here
                 if(hull.length<2 || points[i]!=hull[hull.length-2]){
@@ -50,7 +50,7 @@ async function jarvisMarch(points , cnt) {
                     await wait();
                 }
             }
-            else if(i!=q){
+            else if(i!= (p + 1) % points.length){
                 if(hull.length<2 || points[i]!=hull[hull.length-2]){
                     if(cnt == counter) drawTempLine(points[p],points[i],100,'blue');
                     if(cnt==counter) Step = 3;
