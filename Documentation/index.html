@@ -26,24 +26,19 @@
         </section>
 
         <section>
-            <h2>Kirk Patrick Seidel Algorithm</h2>
-
+            <h2>Kirkpatrick-Seidel Algorithm</h2>
             <h3>Description:</h3>
             <p>The Kirkpatrick-Seidel algorithm is a method used to compute the convex hull of a set of points in the plane. It is an advanced algorithm that achieves optimal time complexity by recursively partitioning the point set into smaller subsets and then merging the resulting convex hulls.</p>
-
             <h3>Algorithm:</h3>
-            <p>The algorithm begins by preprocessing the input points to eliminate redundant points and ensure they are in general position. It then recursively partitions the point set into smaller subsets using divide-and-conquer techniques.</p>
-            
-            <p>At each step of the recursion, the algorithm selects a line that divides the point set into two approximately equal-sized subsets. It then computes the convex hulls of these subsets independently. The convex hulls are merged using a process called "upper tangent" and "lower tangent" computation, resulting in the convex hull of the entire point set.</p>
-
+            <p>The algorithm begins by preprocessing the input points to eliminate redundant points and ensure they are in general position. It then recursively partitions the point set using divide-and-conquer techniques.</p>
+            <p>At each step of the recursion, the algorithm selects a line that divides the point set into two subsets. It then computes the convex hulls of these subsets independently. The convex hulls are merged using a process called "upper bridge" and "lower bridge" computation, resulting in the convex hull of the entire point set.</p>
             <p>The main steps of the Kirkpatrick-Seidel algorithm can be summarized as follows:</p>
             <ol>
-                <li>Preprocess the input points to ensure they are in general position.</li>
-                <li>Recursively partition the point set into smaller subsets using divide-and-conquer.</li>
-                <li>Compute the convex hulls of the subsets independently.</li>
-                <li>Merge the convex hulls using upper and lower tangent computation.</li>
+            <li>Preprocess the input points to ensure they are in general position.</li>
+            <li>Recursively partition the point set using divide-and-conquer.</li>
+            <li>Compute the convex hulls of the subsets independently.</li>
+            <li>Merge the convex hulls using upper and lower bridge computation.</li>
             </ol>
-
             <p>The correctness and efficiency of the Kirkpatrick-Seidel algorithm rely on its ability to divide the point set into balanced subsets and merge the resulting convex hulls efficiently.</p>
             
             <h3>Number of points vs Time</h3>
@@ -55,23 +50,23 @@
                   </tr>
                   <tr>
                     <td style="border: 1px solid black; padding: 8px;">10 points</td>
-                    <td style="border: 1px solid black; padding: 8px;">86μs</td>
+                    <td style="border: 1px solid black; padding: 8px;">86 μs</td>
                   </tr>
                   <tr>
                     <td style="border: 1px solid black; padding: 8px;">100 points</td>
-                    <td style="border: 1px solid black; padding: 8px;">632μs</td>
+                    <td style="border: 1px solid black; padding: 8px;">632 μs</td>
                   </tr>
                   <tr>
                     <td style="border: 1px solid black; padding: 8px;">1000 points</td>
-                    <td style="border: 1px solid black; padding: 8px;">5985μs</td>
+                    <td style="border: 1px solid black; padding: 8px;">5985 μs</td>
                   </tr>
                   <tr>
                     <td style="border: 1px solid black; padding: 8px;">10000 points</td>
-                    <td style="border: 1px solid black; padding: 8px;">19462μs</td>
+                    <td style="border: 1px solid black; padding: 8px;">19462 μs</td>
                   </tr>
                   <tr>
                     <td style="border: 1px solid black; padding: 8px;">100000 points</td>
-                    <td style="border: 1px solid black; padding: 8px;">539146μs</td>
+                    <td style="border: 1px solid black; padding: 8px;">539146 μs</td>
                   </tr>
                 </table>
               </div>
@@ -100,7 +95,7 @@
                     <li>For \(i = 2, 3, \ldots\),
                         <ol type="a">
                             <li>Find \(v_i\) as the point in \(P \setminus \{v_{i-1}, v_{i-2}\}\) that minimizes the turning angle with respect to \(v_{i-2}\) and \(v_{i-1}\).</li>
-                            <li>If \(v_i\) equals \(v_1\), terminate and return the sequence of vertices \(hv_1, \ldots, v_{i-1}v_i\) representing the convex hull.</li>
+                            <li>If \(v_i\) equals \(v_1\), terminate and return the sequence of vertices \(h\{v_1, \ldots, v_{i-1}v_i\}\) representing the convex hull.</li>
                         </ol>
                     </li>
                 </ol>
@@ -117,23 +112,23 @@
             </tr>
             <tr>
                 <td style="border: 1px solid black; padding: 8px;">10 points</td>
-                <td style="border: 1px solid black; padding: 8px;">6μs</td>
+                <td style="border: 1px solid black; padding: 8px;">6 μs</td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; padding: 8px;">100 points</td>
-                <td style="border: 1px solid black; padding: 8px;">144μs</td>
+                <td style="border: 1px solid black; padding: 8px;">144 μs</td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; padding: 8px;">1000 points</td>
-                <td style="border: 1px solid black; padding: 8px;">43μs</td>
+                <td style="border: 1px solid black; padding: 8px;">43 μs</td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; padding: 8px;">10000 points</td>
-                <td style="border: 1px solid black; padding: 8px;">491μs</td>
+                <td style="border: 1px solid black; padding: 8px;">491 μs</td>
             </tr>
             <tr>
                 <td style="border: 1px solid black; padding: 8px;">100000 points</td>
-                <td style="border: 1px solid black; padding: 8px;">9796μs</td>
+                <td style="border: 1px solid black; padding: 8px;">9796 μs</td>
             </tr>
             </table>
             </div>

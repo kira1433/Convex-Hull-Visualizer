@@ -1,20 +1,23 @@
 var us = require('microtime');
+async function main(){
 const check = [10,100,1000,10000,100000]
-
-for(let pointCnt of check){
-    const points = generateRandomPoints(pointCnt);
-    const times = [];
-    for (let i = 0; i < 10; i++) {
+const res = [];
+for(let k = 0;k<5;k++){
+    for(let pointCnt of check){
+        const points = generateRandomPoints(pointCnt);
         var start = us.now();
-        jarvisMarch(points,0);
+        let h = (await kirkpatrickSeidel(points,0)).length;
         var end = us.now();
         var timeElapsed = end - start;
-        times.push(timeElapsed);
+        // res.push([pointCnt,h,timeElapsed]);
+        console.log(pointCnt,h,timeElapsed)
+        // console.log(`Time elapsed for ${pointCnt} points: ${timeElapsed}μs`)
     }
-    
-    var avgTimeElapsed = times.reduce((a, b) => a + b, 0) / times.length;
-    console.log(`Time elapsed for ${pointCnt} points: ${timeElapsed}μs`)
 }
+// console.log(res)
+}
+
+main()
 
 function generateNormalPoint(mean, variance) {
     let u = 0, v = 0;
