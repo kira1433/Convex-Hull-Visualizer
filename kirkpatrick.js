@@ -111,6 +111,7 @@ async function upper_bridge(S , a , sign,cnt){
     for(let p of points){
         if(cnt==counter && p.color != 'red') p.color = 'black';
     }
+    if(cnt == counter) temp_lines.length = 0;
     if(cnt == counter) drawTempLineFromMid({x:a,y:0},{x:a,y:600},1,'blue');
     for(let p of S){
         if(cnt==counter && p.color == 'black') p.color = 'blue';

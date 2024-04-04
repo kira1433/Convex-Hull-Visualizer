@@ -5,54 +5,51 @@ async function jarvisMarch(points , cnt) {
     }
     if(points.length < 3) return;
 
-    function orientation(p, q, r) {
-        let val = (q.y - p.y) * (r.x - q.x) - (q.x - p.x) * (r.y - q.y);
-        if (val == 0) return 0;
-        return (val > 0) ? 1 : 2;
+    function find(a, b, c) {
+        if((b.y-a.y)*(c.x-b.x)-(b.x-a.x)*(c.y-b.y)==0) return 0;
+        return ((b.y-a.y)*(c.x-b.x)-(b.x-a.x)*(c.y-b.y) > 0) ? 1 : 2;
     }
 
-    // Find the leftmost point
-    let leftmost = 0;
+    let leftest = 0;
     for (let i = 1; i < points.length; i++) {
-        if (points[i].x < points[leftmost].x)
-            leftmost = i;
+        if (points[i].x >= points[leftest].x)continue;
+        leftest = i;
     }
 
     const hull = [];
-    let p = leftmost;
-    let q;
+    let a = leftest;
+    let b;
     do {
-        hull.push(points[p]);
-        q = (p + 1) % points.length;
+        hull.push(points[a]);
+        b = (a + 1) % points.length;
         
         if(cnt == counter){
             for(let p of points)p.color = 'black';
-            points[q].color = 'red';
-            drawTempLine(points[p],points[q],100,'green');
+            points[b].color = 'red';
+            drawTempLine(points[a],points[b],100,'green');
         }
         if(cnt==counter) Step = 1;
         if(cnt==counter) updateTextElement();
         await wait();
 
         for (let i = 0; i < points.length; i++) {
-            // If i is more counterclockwise than current q, then update q
-            if (orientation(points[p], points[i], points[q]) == 2 && i!= (p + 1) % points.length){
-                q = i;
+            if (find(points[a], points[i], points[b]) == 2 && i!= (a + 1) % points.length){
+                b = i;
 //dont edit from here
                 if(hull.length<2 || points[i]!=hull[hull.length-2]){
                     if(cnt == counter){
                         for(let p of points)p.color = 'black';
                         points[i].color = 'red';
-                        drawTempLine(points[p],points[i],100,'green');
+                        drawTempLine(points[a],points[i],100,'green');
                     }
                     if(cnt==counter) Step = 2;
                     if(cnt==counter) updateTextElement();
                     await wait();
                 }
             }
-            else if(i!= (p + 1) % points.length){
+            else if(i!= (a + 1) % points.length){
                 if(hull.length<2 || points[i]!=hull[hull.length-2]){
-                    if(cnt == counter) drawTempLine(points[p],points[i],100,'blue');
+                    if(cnt == counter) drawTempLine(points[a],points[i],100,'blue');
                     if(cnt==counter) Step = 3;
                     if(cnt==counter) updateTextElement();
                     await wait();
@@ -63,7 +60,7 @@ async function jarvisMarch(points , cnt) {
         if(cnt==counter) Step = 4;
         if(cnt==counter) updateTextElement();
         await wait();
-        if(cnt == counter) drawLine(points[p],points[q],200,'red');
+        if(cnt == counter) drawLine(points[a],points[b],200,'red');
         if(cnt == counter) temp_lines.length = 0;
         if(cnt==counter) Step = 5;
         if(cnt==counter) updateTextElement();
@@ -72,8 +69,8 @@ async function jarvisMarch(points , cnt) {
             for(let p of points)p.color = 'black';
         }
 //dont edit to here
-        p = q;
-    } while (p != leftmost);
+        a = b;
+    } while (a != leftest);
 
     if(cnt==counter) Step = 6;
     if(cnt==counter) updateTextElement();
