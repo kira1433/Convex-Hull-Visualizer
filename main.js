@@ -57,7 +57,7 @@ const clearBtn = document.getElementById('clearBtn');
 clearBtn.addEventListener('click', async() => {
     points.length = 0;
     await clear();
-    textElement.value = "Turn on the slider to automatically go through the steps. For manually observing the steps, click on the algorithm you want to visualize.";
+    textElement.value = "Mark the points you want to perform Convex Hull on, or use the 'Random' feature for random points. Then, use 'Next' or 'Auto' or 'Fast' depending on whether you want to manually or automatically go through the steps or fast forward through all steps.";
   });
 
 // Add event listener for rand button
@@ -69,7 +69,7 @@ randBtn.addEventListener('click', async() => {
     jarvisMarchRequested = false;
     kirkpatrickSeidelRequested = false;
     await clear();
-    textElement.value = "Turn on the slider to automatically go through the steps. For manually observing the steps, click on the algorithm you want to visualize.";
+    textElement.value = "Select the algorithm you want to visualize and then, click on 'Next' to manually go through the steps. Select option 'Auto' for automatically moving using time spaced steps, and option 'Fast' to fast forward through all the steps.";
     drawRandomPoints(10);
 });
 
@@ -78,39 +78,39 @@ function updateTextElement() {
   if(kirkpatrickSeidelRequested) {
     switch (Step) {
       case 0:
-        textElement.value = "Convex Hull using the Kirkpatrick-Seidel Algorithm.";
+        textElement.value = "The Kirkpatrick-Seidel Algorithm is a efficient method for finding the convex hull of a set of points in the plane. It is a divide-and-conquer algorithm that recursively divides the set of points into smaller subsets, finds the convex hulls of these subsets, and then merges them to obtain the final convex hull.";
         break;
       case 1:
-        textElement.value = "Draw a line 'L' which divides the point set into 2 equal halves on either side. Mark the points: p_min and p_min in red colour.";
+        textElement.value = "To begin, we draw a line 'L' that divides the point set into two roughly equal halves, with points on either side of the line. We also mark the points p_min and p_max, which have the minimum and maximum x-coordinates, respectively, in red color. These points are guaranteed to be part of the convex hull.";
         break;
       case 2:
-        textElement.value = "Mark the slopes between arbitrary points marked in blue";
+        textElement.value = "Next, we calculate the slopes between arbitrary pairs of points and mark them in blue color. These slopes will be used to determine the median slope, which is a crucial step in the algorithm.";
         break;
       case 3:
-        textElement.value = "Median slope of all - coloured in purple. Slopes higher than median - coloured in brown. Slopes lower than median - coloured in orange. Also, mark the unpaired points (if any) green to consider them for the next iteration.";
+        textElement.value = "We now find the median slope among all the calculated slopes and color it in purple. Slopes higher than the median slope are colored in brown, while slopes lower than the median slope are colored in orange. Any unpaired points (points not part of a calculated slope) are marked in green color to be considered for the next iteration of the algorithm.";
         break;
       case 4:
-        textElement.value = "Draw the median slope line through all candidates";
+        textElement.value = "Using the median slope, we draw a line through all the candidate points. This line will be used to divide the point set into two subsets, which will be processed separately in the next steps.";
         break;
       case 5:
-        textElement.value = "Find the line with median slope, passing through one of the candidates and having: the maximum y-intercept - for upper bridge and the minimum y-intercept - for lower bridge.";
+        textElement.value = "We now find the line with the median slope that passes through one of the candidate points and has the maximum y-intercept (for the upper bridge) or the minimum y-intercept (for the lower bridge). These lines will form the 'bridges' that connect the convex hulls of the two subsets.";
         break;
       case 6:
-        textElement.value = "Mark those points green, which are to be considered for the next iteration in finding upper/lower bridge.";
+        textElement.value = "Mark those points green, which are to be considered for the next iteration in finding upper/lower bridge. Use the 3 lemmata that use the median slope to mark the points green. These help prune away the points that cannot be the end points of the upper/lower bridge.";
         break;
       case 7:
-        textElement.value = "Consider only the green points for finding this upper/lower bridge, ignore all the blue points from further consideration. Mark the slopes between only these points now.";
+        textElement.value = "In this step, we focus only on the green points that were marked in the previous step. We prune all the blue points (previously calculated slopes) and calculate new slopes between the green points. These slopes will be used to find the convex hull of each subset recursively.";
         break;
       case 8:
-        textElement.value = "Draw the upper/lower bridge obtained.";
+        textElement.value = "Draw the upper/lower bridge between those points that are left unpruned after all the pruning steps. This red-lined bridge is part of the Convex Hull.";
         break;
       case 9:
-        textElement.value = "The Convex-Hull is constructed using Kirkpatrick-Seidel Algorithm.";
+        textElement.value = "The Convex Hull of the given set of points has been successfully constructed using the Kirkpatrick-Seidel Algorithm. This efficient divide-and-conquer approach allows us to find the convex hull in O(n log h) time, where n is the number of points and h is number of points in upper hull.";
         break;
       default:
-        textElement.value = "Unexpected step value reached.";
+        textElement.value = "An unexpected step value has been reached. Please check the implementation.";
         break;
-    }
+      }
   }
   else if (jarvisMarchRequested) {
     switch(Step) {
@@ -124,7 +124,7 @@ function updateTextElement() {
         textElement.value = "Drawing lines to the potential next points in green colour";
         break;
       case 3:
-        textElement.value = "Drawing lines to the points that are not selected as next point for the convex hull in blue colour";
+        textElement.value = "Drawing lines to the points that are not 'potential next points' for the convex hull in blue colour";
         break;
       case 4:
         textElement.value = "Slopes from current left-most point to all other points have been marked";
