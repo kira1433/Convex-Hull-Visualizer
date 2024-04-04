@@ -46,6 +46,36 @@
 
             <p>The correctness and efficiency of the Kirkpatrick-Seidel algorithm rely on its ability to divide the point set into balanced subsets and merge the resulting convex hulls efficiently.</p>
             
+            <h3>Number of points vs Time</h3>
+            <div style="display: flex; justify-content: center;">
+                <table style="border-collapse: collapse; margin: 20px;">
+                  <tr>
+                    <th style="border: 1px solid black; padding: 8px;">Number of points</th>
+                    <th style="border: 1px solid black; padding: 8px;">Time Elapsed</th>
+                  </tr>
+                  <tr>
+                    <td style="border: 1px solid black; padding: 8px;">10 points</td>
+                    <td style="border: 1px solid black; padding: 8px;">86μs</td>
+                  </tr>
+                  <tr>
+                    <td style="border: 1px solid black; padding: 8px;">100 points</td>
+                    <td style="border: 1px solid black; padding: 8px;">632μs</td>
+                  </tr>
+                  <tr>
+                    <td style="border: 1px solid black; padding: 8px;">1000 points</td>
+                    <td style="border: 1px solid black; padding: 8px;">5985μs</td>
+                  </tr>
+                  <tr>
+                    <td style="border: 1px solid black; padding: 8px;">10000 points</td>
+                    <td style="border: 1px solid black; padding: 8px;">19462μs</td>
+                  </tr>
+                  <tr>
+                    <td style="border: 1px solid black; padding: 8px;">100000 points</td>
+                    <td style="border: 1px solid black; padding: 8px;">539146μs</td>
+                  </tr>
+                </table>
+              </div>
+
             <h3>Run Time Analysis:</h3>
             <p>The Kirkpatrick-Seidel algorithm achieves an optimal time complexity of \(O(n \log h)\), where \(n\) is the number of input points and \(h\) is the number of vertices on the convex hull. This complexity makes it one of the fastest algorithms for computing the convex hull in practice.</p>
             <img src="../Documentation/Kirkpatrik_Seidel_Graph.jpg" alt="Kirkpatrick Seidel Algorithm">
@@ -78,6 +108,36 @@
             <p>The correctness of the algorithm stems from the property that, at each iteration, the next vertex \(v_i\) minimizes the turning angle, ensuring the construction of the convex hull in counterclockwise order.</p>
             <p>Although the computation of turning angles can be achieved using basic trigonometry in constant time, it is interesting to note that angle comparisons can be made using orientation tests alone. This observation implies that if the input coordinates are integers, the vertices of the convex hull can be computed exactly, assuming double-precision integer computations.</p>
 
+            <h3>Running times for Jarvis March</h3>
+            <div style="display: flex; justify-content: center;">
+            <table style="border-collapse: collapse; margin: 20px;">
+            <tr>
+                <th style="border: 1px solid black; padding: 8px;">Number of points</th>
+                <th style="border: 1px solid black; padding: 8px;">Time Elapsed</th>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black; padding: 8px;">10 points</td>
+                <td style="border: 1px solid black; padding: 8px;">6μs</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black; padding: 8px;">100 points</td>
+                <td style="border: 1px solid black; padding: 8px;">144μs</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black; padding: 8px;">1000 points</td>
+                <td style="border: 1px solid black; padding: 8px;">43μs</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black; padding: 8px;">10000 points</td>
+                <td style="border: 1px solid black; padding: 8px;">491μs</td>
+            </tr>
+            <tr>
+                <td style="border: 1px solid black; padding: 8px;">100000 points</td>
+                <td style="border: 1px solid black; padding: 8px;">9796μs</td>
+            </tr>
+            </table>
+            </div>
+
             <h3>Run Time Analysis:</h3>
             <p>In terms of runtime analysis, the computation of \(v_1\) takes \(O(n)\) time, and each iteration of the algorithm can be implemented in \(O(n)\) time. Consequently, the overall time complexity of Jarvis's March is \(O(n + nh) = O(nh)\), where \(h\) represents the number of vertices on the convex hull.</p>
             <img src="../Documentation/Jarvis_March_Graph.jpg" alt="Jarvis March Algorithm">
@@ -86,6 +146,30 @@
         <section>
             <h2>Comparison</h2>
             <p>Kirk Patrick Seidel Algorithm has an asymptotic time complexity of \(O(n \log h)\) whereas Jarvis March has \(O(nh)\). However, in terms of simplicity in terms of the algorithm and its implementation, Jarvis March is much simpler than Kirk Patrick Seidel. In our testing, we observed that the constant factor of \(nh\) in Jarvis March is much lesser than the constant factor of \(n \log h\) in Kirk Patrick Seidel. This would mean that, although at very high number of points, Kirk Patrick has better time complexity, but until \(100000\) points, it was observed that Jarvis March was performing better.</p>
+        </section>
+
+        <section>
+            <h2>Implementation Details:</h2>
+            <h3><strong>Visualization Files:</strong></h3>
+            <div><u>index.html</u> - Contains the core HTML & CSS styling code for visualization.</div>
+            <div><u>helper.js</u> - Initializes the visualization using various functions. The functions used help clear the canvas, draw convex hull lines, step-specific lines from middle of the line & from the end.</div>
+            <div><u>main.js</u> - Contains event-listener functions for Clear, Random, Jarvis March, Kirkpatrick Seidel, Next, Auto and Fast buttons. Also updates text element based on current step.</div>
+            <div><u>kirkpatrick.js</u>: </div>
+            <ul>
+                <li>kirkpatrickSeidel(): Main function which calls the other functions in this file.</li>
+                <li>median_of_medians(): Uses median of medians algorithm to find the median in O(n) time.</li>
+                <li>upper_hull(): Hull function which can be used for finding both the lower & upper hulls.</li>
+                <li>upper_bridge(): Finds the upper & lower bridges of the points in consideration.</li>
+            </ul>
+            <div><u>kirkpatrick_fast.js</u> - Has the same functions and functionality as kirkpatrick.js but works faster, with lesser visualization steps.</div>
+            <div><u>jarvis.js</u> - Has an asynchronous implementation of the Jarvis March algorithm for finding the convex hull. It includes functionality to visualize the algorithm's progress by drawing lines and updating point colors and text elements.</div>
+            <div><u>jarvis_fast.js</u> - Has the same functions and functionality as jarvis.js but works with faster visualization.</div>
+            <div><u>random.js</u> - Function inside is called in the event listener of random button. Plots random points from a normal distribution when called.</div>
+            <div><u>test.js</u> - Calculates the time elapsed to run the algorithms.</div>
+
+            <h3><strong>Documentation Files:</strong></h3>
+            <div><u>index.html</u> - Contains the core HTML code of documentation.</div>
+            <div><u>styles.css</u> - Contains the CSS styling code for styling the documentation.</div>
         </section>
 
         <section>
